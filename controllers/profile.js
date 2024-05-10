@@ -1,5 +1,7 @@
 const User = require('../models/user');
+const {deleteFile} = require('../utils/delete-file');
 
+//view user's data
 exports.getProfile = async(req,res,next) => {
     const id = req.userId;
     try{
@@ -20,13 +22,12 @@ exports.getProfile = async(req,res,next) => {
     }
 }
 
+//edit user data
 exports.editProfile = async(req,res,next) => {
     const name = req.body.name;
     const phoneNumber = req.body.phoneNumber;
     const bio = req.body.bio;
-    let photo;
-    // const //photo = 'images/' + req.file.filename;
-    console.log(req.file)
+    const photo = 'images/' + req.file.filename;
     const id = req.userId;
 
     try{
@@ -39,18 +40,23 @@ exports.editProfile = async(req,res,next) => {
         if(name){user.profile.name = name}
         if(phoneNumber){user.profile.phoneNumber = phoneNumber}
         if(bio){user.profile.bio = bio}
-        if(photo){user.profile.photo = photo}
+        if(photo !== user.profile.photo){
+            deleteFile(user.profile.photo);
+            user.profile.photo = photo;
+        }
         await user.save();
         res.status(201).json({message:'updated profile', user: user})
     }
     catch(err){
         if(!err.statusCode){
             err.statusCode = 500;
+            deleteFile(photo);
         }
         next(err);
     }
 }
 
+//change privacy(private or public)
 exports.setProfileVisibility = async(req,res,next) => {
     const id = req.userId;
     const visibility = req.body.visibility;
@@ -73,6 +79,7 @@ exports.setProfileVisibility = async(req,res,next) => {
     }
 }
 
+//to view other user's profile
 exports.viewProfile = async(req,res,next) => {
     const name = req.params.name;
     try{

@@ -2,10 +2,10 @@ const express = require('express');
 const{ body } = require('express-validator');
 const authController = require('../controllers/auth');
 const User = require('../models/user');
-const isAuth = require('../middlewares/is-auth');
 
 const router = express.Router();
 
+//POST /api/user/signup
 router.post('/signup',[
     body('username').trim().not().isEmpty(),
     body('password').trim().isLength({min: 4}),
@@ -18,6 +18,7 @@ router.post('/signup',[
     }),
 ],authController.signup);
 
+//POST /api/user/login
 router.post('/login',[
     body('email').isEmail(),
     body('password').trim()

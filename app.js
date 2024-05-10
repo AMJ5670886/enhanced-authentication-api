@@ -5,6 +5,7 @@ const profileRoutes = require('./routes/profile');
 const multer = require('multer');
 const mongoose = require('mongoose');
 const path = require('path');
+const config = require('./config/config');
 
 const fileStorage = multer.diskStorage({
     destination: (req,file,cb) => {
@@ -15,23 +16,18 @@ const fileStorage = multer.diskStorage({
     }
 })
 
-const fileFilter = (req,file,cb) => {
-    if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg'){
-        cb(null,true);
-    }else{
-        cb(null,false);
-    }
-}
-
 const app = express();
 
+//middlewares
 app.use(bodyParser.json());
-app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
+app.use(multer({storage: fileStorage}).single('image'));
 app.use('/images',express.static(path.join(__dirname,'images')));
 
+//routes
 app.use('/api/user',authRoutes);
 app.use('/api/profile',profileRoutes);
 
+//error handling
 app.use((error,req,res,next)=>{
     const status = error.statusCode || 500;
     const message = error.message;
@@ -42,8 +38,13 @@ app.use((error,req,res,next)=>{
     })
 })
 
-mongoose.connect('mongodb+srv://ajoldmj:ajoldmj12@nodejsfull.nx874w1.mongodb.net/auth-api')
-    .then((result)=>{
-        app.listen(8080);
-        console.log('connected');
-    })
+//connection to db
+mongoose.connect(config.MONGOURL)
+.then((result)=>{
+    app.listen(config.PORT,(result)=>{
+        console.log(`Server: Starting server on port: ${config.PORT}`)
+    });
+})
+.catch(err=>{
+console.log('Server error');
+})

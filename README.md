@@ -82,9 +82,26 @@ npm start
 
 ## Screenshots
 
+## Signup
 ![Signup](https://github.com/AMJ5670886/enhanced-authentication-api/blob/master/screenshots/signup.png)
 
+## Login
+![Login](https://github.com/AMJ5670886/enhanced-authentication-api/blob/master/screenshots/login.png)
 
+## Edit
+![Edit](https://github.com/AMJ5670886/enhanced-authentication-api/blob/master/screenshots/edit.png)
+
+## Token
+![auth](https://github.com/AMJ5670886/enhanced-authentication-api/blob/master/screenshots/auth.png)
+
+## profile view
+![profileView](https://github.com/AMJ5670886/enhanced-authentication-api/blob/master/screenshots/profileview.png)
+
+## visibility
+![visibility](https://github.com/AMJ5670886/enhanced-authentication-api/blob/master/screenshots/visibility.png)
+
+## access
+![access](https://github.com/AMJ5670886/enhanced-authentication-api/blob/master/screenshots/access.png)
 
 
 

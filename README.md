@@ -80,6 +80,10 @@ npm start
 | :-------- | :------- | :-------------------------------- |
 | `name`      | `string` | admin can only access private profiles|
 
+## Screenshots
+
+![Signup](https://github.com/AMJ5670886/enhanced-authentication-api/blob/master/screenshots/signup.png)
+
 
 
 
